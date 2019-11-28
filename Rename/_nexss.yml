@@ -1,0 +1,5 @@
+name: Rename
+author: Marcin Polak mapoart@gmail.com
+debug: true
+files:
+  - name: src/dataRename.js

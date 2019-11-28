@@ -1,0 +1,4 @@
+name: Concat
+debug: true
+files:
+  - name: src/concat.js
