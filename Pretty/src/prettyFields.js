@@ -1,0 +1,38 @@
+// Nexss PROGRAMMER 2.0.2 - NodeJS
+// Data/Delete Package
+// STDIN
+process.stdin.on("data", function(NexssStdin) {
+  let NexssStdout;
+  try {
+    NexssStdout = JSON.parse(NexssStdin.toString());
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
+  // Modify data
+  if (NexssStdout.prettyFields && NexssStdout.prettyFields.split) {
+    let result;
+    NexssStdout.prettyFields.split(",").forEach(element => {
+      // result[element] = NexssStdout[element];
+      if (NexssStdout.hasOwnProperty(element)) {
+        console.log(`${element}: ${NexssStdout[element]}`);
+      } else {
+        if (NexssStdout.debug) {
+          throw `Field '${element}' does not exist in the data. Please check your command or _nexss.yml config file. --prettyFields`;
+        }
+      }
+    });
+  } else {
+    Object.keys(NexssStdout).forEach(element => {
+      console.log(`${element}: ${NexssStdout[element]}`);
+    });
+  }
+
+  // STDOUT
+  // process.stdout.write(JSON.stringify(result));
+});
+
+process.stdin.on("end", function() {
+  //On Windows below is not needed.
+  process.exit(0);
+});
