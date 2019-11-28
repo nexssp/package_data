@@ -1,0 +1,4 @@
+name: Show
+debug: true
+files:
+  - name: src/showFields.js
