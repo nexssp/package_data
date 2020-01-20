@@ -11,7 +11,8 @@ process.stdin.on("data", function(NexssStdin) {
   }
   // Modify data
   if (!NexssStdout.concatFields) {
-    throw "concatFields parameter must be added for Data/Concat";
+    console.error("concatFields parameter must be added for Data/Concat");
+    process.exit(1);
   }
 
   let concatSeparator = "";
@@ -24,7 +25,7 @@ process.stdin.on("data", function(NexssStdin) {
       .split(",")
       .map(element => {
         if (!NexssStdout[element]) {
-          throw `There is no ${element} field in the data.`;
+          console.error(`There is no ${element} field in the data.`);
         }
         return NexssStdout[element];
       });

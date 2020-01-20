@@ -11,7 +11,8 @@ process.stdin.on("data", function(NexssStdin) {
   }
   // Modify data
   if (!NexssStdout.deleteFields) {
-    throw "deleteFields parameter must be added for Data/Delete";
+    console.error("deleteFields parameter must be added for Data/Delete");
+    process.exit(1);
   }
   if (NexssStdout.deleteFields && NexssStdout.deleteFields.split) {
     NexssStdout.deleteFields.split(",").forEach(element => {

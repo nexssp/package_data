@@ -18,7 +18,10 @@ process.stdin.on("data", function(NexssStdin) {
         console.log(`${element}: ${NexssStdout[element]}`);
       } else {
         if (NexssStdout.debug) {
-          throw `Field '${element}' does not exist in the data. Please check your command or _nexss.yml config file. --prettyFields`;
+          console.error(
+            `Field '${element}' does not exist in the data. Please check your command or _nexss.yml config file. --prettyFields`
+          );
+          process.exit(1);
         }
       }
     });

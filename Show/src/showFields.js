@@ -9,9 +9,10 @@ process.stdin.on("data", function(NexssStdin) {
     console.error(e);
     process.exit(1);
   }
-  // Modify data
+  // Modify datarenameFrom and renameTo must have the same number of fields
   if (!NexssStdout.showFields) {
-    throw "showFields parameter must be added for Data/Show";
+    console.error("showFields parameter must be added for Data/Show");
+    process.exit(1);
   }
 
   let result = {};

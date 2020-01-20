@@ -11,18 +11,23 @@ process.stdin.on("data", function(NexssStdin) {
   }
 
   if (!NexssStdout.renameFrom || !NexssStdout.renameFrom.split) {
-    throw "renameFrom parameter must be added for Data/Rename";
+    console.error("renameFrom parameter must be added for Data/Rename");
+    process.exit(1);
   }
 
   if (!NexssStdout.renameTo || !NexssStdout.renameTo.split) {
-    throw "renameTo parameter must be added for Data/Rename";
+    console.error("renameTo parameter must be added for Data/Rename");
+    process.exit(1);
   }
 
   const fromSplit = NexssStdout.renameFrom.split(",");
   const toSplit = NexssStdout.renameTo.split(",");
 
   if (fromSplit.length !== toSplit.length) {
-    throw "renameFrom and renameTo must have the same number of fields";
+    console.error(
+      "renameFrom and renameTo must have the same number of fields"
+    );
+    process.exit(1);
   }
 
   fromSplit.forEach((element, i) => {
