@@ -2,3 +2,4 @@ name: Pretty
 debug: true
 files:
   - name: src/prettyFields.js
+output: nojson
