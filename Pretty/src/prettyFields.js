@@ -15,7 +15,7 @@ process.stdin.on("data", function(NexssStdin) {
     NexssStdout.prettyFields.split(",").forEach(element => {
       // result[element] = NexssStdout[element];
       if (NexssStdout.hasOwnProperty(element)) {
-        console.log(`${element}: ${NexssStdout[element]}`);
+        console.log(`\x1b[1m${element}\x1b[0m:`, NexssStdout[element]);
       } else {
         if (NexssStdout.debug) {
           console.error(
@@ -27,7 +27,7 @@ process.stdin.on("data", function(NexssStdin) {
     });
   } else {
     Object.keys(NexssStdout).forEach(element => {
-      console.log(`${element}: ${NexssStdout[element]}`);
+      console.log(`\x1b[1m${element}\x1b[0m:`, NexssStdout[element]);
     });
   }
 

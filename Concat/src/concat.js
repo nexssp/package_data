@@ -17,7 +17,22 @@ process.stdin.on("data", function(NexssStdin) {
 
   let concatSeparator = "";
   if (NexssStdout.concatSeparator) {
-    concatSeparator = NexssStdout.concatSeparator;
+    switch (NexssStdout.concatSeparator) {
+      case "EOL":
+        concatSeparator = require("os").EOL;
+        break;
+      case "PATH":
+      case "PTH":
+        concatSeparator = require("path").sep;
+        break;
+      case "SPACE":
+      case "SPC":
+        concatSeparator = " ";
+        break;
+      default:
+        concatSeparator = NexssStdout.concatSeparator;
+        break;
+    }
   }
 
   if (NexssStdout.concatFields && NexssStdout.concatFields.split) {
