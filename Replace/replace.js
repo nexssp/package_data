@@ -52,8 +52,6 @@ const result = NexssStdout.nxsIn.map((element) => {
   return element.replace(r, NexssStdout.replaceTo);
 });
 
-console.log(result);
-
 delete NexssStdout.nxsIn;
 delete NexssStdout.resultField_1;
 process.stdout.write(JSON.stringify(NexssStdout));
