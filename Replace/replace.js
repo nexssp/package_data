@@ -1,23 +1,22 @@
 const {
   nxsError,
-  nxsInfo,
 } = require(`${process.env.NEXSS_PACKAGES_PATH}/Nexss/Lib/NexssLog.js`);
 
 const NexssIn = require(`${process.env.NEXSS_PACKAGES_PATH}/Nexss/Lib/NexssIn.js`);
 let NexssStdout = NexssIn();
 
-if (!NexssStdout.replaceFrom) {
-  nxsError("You need to pass '--replaceFrom' as string or regexp.");
+if (!NexssStdout._replaceFrom) {
+  nxsError("You need to pass '--_replaceFrom' as string or regexp.");
   process.exit(0);
 }
 
-if (!NexssStdout.replaceTo) {
-  NexssStdout.replaceTo = "";
+if (!NexssStdout._replaceTo) {
+  NexssStdout._replaceTo = "";
 }
 
-switch (NexssStdout.replaceFrom) {
+switch (NexssStdout._replaceFrom) {
   case "nexssFileExt":
-    NexssStdout.replaceFrom = ".[^.]*$";
+    NexssStdout._replaceFrom = ".[^.]*$";
     break;
   default:
     break;
@@ -25,33 +24,39 @@ switch (NexssStdout.replaceFrom) {
 
 const result = NexssStdout.nxsIn.map((element) => {
   // const reg = new RegExp("/.[^.]*$/");
-  if (Array.isArray(NexssStdout.replaceFrom)) {
-    if (Array.isArray(NexssStdout.replaceTo)) {
-      const rt_len = NexssStdout.replaceTo.length;
-      if (rt_len !== NexssStdout.replaceFrom.length) {
+  if (Array.isArray(NexssStdout._replaceFrom)) {
+    if (Array.isArray(NexssStdout._replaceTo)) {
+      const rt_len = NexssStdout._replaceTo.length;
+      if (rt_len !== NexssStdout._replaceFrom.length) {
         nxsError(
-          "'--replaceTo' if is mulitple/array then '--replaceFrom' must have the same length."
+          "'--_replaceTo' if is mulitple/array then '--_replaceFrom' must have the same length."
         );
         process.exit(0);
       }
-      let i = 0;
-      NexssStdout.replaceFrom.forEach((e) => {
-        element.replace(new RegExp(e, "gi"), NexssStdout.replaceTo[i]);
-        i++;
-      });
+
+      for (var i = 0, len = NexssStdout._replaceFrom.length; i < len; i++) {
+        const e = NexssStdout._replaceFrom[i];
+        element = element.replace(
+          new RegExp(e, "gi"),
+          NexssStdout._replaceTo[i]
+        );
+      }
+
+      return element;
     }
   } else {
-    if (Array.isArray(NexssStdout.replaceTo)) {
+    if (Array.isArray(NexssStdout._replaceTo)) {
       nxsError(
-        "'--replaceTo' cannot be more then once if '--replaceFrom' is only once."
+        "'--_replaceTo' cannot be more then once if '--_replaceFrom' is only once."
       );
       process.exit(0);
     }
   }
-  const r = new RegExp(NexssStdout.replaceFrom, "gi");
-  return element.replace(r, NexssStdout.replaceTo);
+  const r = new RegExp(NexssStdout._replaceFrom, "gi");
+  return element.replace(r, NexssStdout._replaceTo);
 });
 
+NexssStdout.nxsOut = result;
 delete NexssStdout.nxsIn;
 delete NexssStdout.resultField_1;
 process.stdout.write(JSON.stringify(NexssStdout));
